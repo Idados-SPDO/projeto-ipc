@@ -1,0 +1,8 @@
+streamlit
+openpyxl
+tabulate
+unidecode
+xlsxwriter
+pandas
+duckdb
+matplotlib
