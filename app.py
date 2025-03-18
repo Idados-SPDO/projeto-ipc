@@ -100,8 +100,7 @@ def main():
             query = f"SELECT * FROM {table_name}"
             df_atual = con.execute(query).fetchdf()
         except Exception:
-            #df_atual = pd.DataFrame()  
-            pass
+            df_atual = pd.DataFrame()  
 
         if not df_atual.empty:
             df_atualizada = atualizar_base_incremental(df_atual, df_novo)
