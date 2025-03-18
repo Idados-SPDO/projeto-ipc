@@ -37,7 +37,6 @@ def read_excel_file(uploaded_file) -> pd.DataFrame:
         else:
             cols_to_keep.append(col)
     df = df[cols_to_keep]
-    st.dataframe(df)
     return df
 
 @st.cache_data
