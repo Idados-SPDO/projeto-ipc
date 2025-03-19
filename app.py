@@ -19,6 +19,7 @@ def load_database(df: pd.DataFrame, table_name: str, con):
     con.execute(f"CREATE TABLE {table_name} AS SELECT * FROM df_excel")
 
 def create_legend():
+    st.sidebar.text("Legenda:")
     legend_markdown = """
     <style>
         .legend-table {
@@ -66,7 +67,7 @@ def create_legend():
             <td class="suficiente"></td>
         </tr>
         <tr>
-            <td>Excessão</td>
+            <td>Exceção</td>
             <td>Itens que não entram no cálculo do IPC</td>
             <td class="excessao"></td>
         </tr>
@@ -81,8 +82,8 @@ def main():
     st.text("As abas abaixo facilitam a navegação, permitindo que o usuário acesse as informações de acordo com sua necessidade. A aba 'Visão Geral' exibe a quantidade de itens cotados para o IPC e identifica seu status, informando se é necessário abrir um pedido ou não.")
     st.text("A aba 'Visão Gráfica' apresenta duas perspectivas: 'Visão do Último Mês' e 'Série Histórica'. A 'Visão do Último Mês' exibe um gráfico de barras referente ao último mês, permitindo a seleção da UF e do item desejado para filtragem. Já a 'Série Histórica' possibilita a seleção da UF e do item, oferecendo uma visão mais ampla da evolução da quantidade de cotações a partir de 2024.")
     st.text("Por fim, a aba 'Pesquisa e Detalhamento' permite a aplicação de filtros específicos na base geral, possibilitando a filtragem por data, item, criticidade e UF.")
-    uploaded_file = st.sidebar.file_uploader("Atualize sua Base de Cotações:", type=["xls", "xlsx"])
-    uploaded_excess_file = st.sidebar.file_uploader("Atualize sua Base de Excessões:", type=["xls", "xlsx"])
+    #uploaded_file = st.sidebar.file_uploader("Atualize sua Base de Cotações:", type=["xls", "xlsx"])
+    #uploaded_excess_file = st.sidebar.file_uploader("Atualize sua Base de Excessões:", type=["xls", "xlsx"])
     
     create_legend()
     
@@ -93,28 +94,28 @@ def main():
     excess_table_name = "excessoes"
     con = duckdb.connect(db_path)
     
-    if uploaded_file is not None:
-        df_novo = read_excel_file(uploaded_file)
+    #if uploaded_file is not None:
+    #    df_novo = read_excel_file(uploaded_file)
+    #    
+    #    try:
+    #        query = f"SELECT * FROM {table_name}"
+    #        df_atual = con.execute(query).fetchdf()
+    #    except Exception:
+    #        df_atual = pd.DataFrame()  
+    #   
+    #    if not df_atual.empty:
+    #        df_atualizada = atualizar_base_incremental(df_atual, df_novo)
+     #   else:
+     #       df_atualizada = df_novo
+     #   
+     #   load_database(df_atualizada, table_name, con)
         
-        try:
-            query = f"SELECT * FROM {table_name}"
-            df_atual = con.execute(query).fetchdf()
-        except Exception:
-            df_atual = pd.DataFrame()  
-
-        if not df_atual.empty:
-            df_atualizada = atualizar_base_incremental(df_atual, df_novo)
-        else:
-            df_atualizada = df_novo
-        
-        load_database(df_atualizada, table_name, con)
-
     
-    if uploaded_excess_file is not None:
-        df_excess_excel = read_excel_excess_file(uploaded_excess_file)
-        con.register("df_excess_excel", df_excess_excel)
-        con.execute(f"DROP TABLE IF EXISTS {excess_table_name}")
-        con.execute(f"CREATE TABLE {excess_table_name} AS SELECT * FROM df_excess_excel")
+    #if uploaded_excess_file is not None:
+    #    df_excess_excel = read_excel_excess_file(uploaded_excess_file)
+    #    con.register("df_excess_excel", df_excess_excel)
+    #    con.execute(f"DROP TABLE IF EXISTS {excess_table_name}")
+    #    con.execute(f"CREATE TABLE {excess_table_name} AS SELECT * FROM df_excess_excel")
     
     query = f"SELECT * FROM {table_name}"
     excess_query = f"SELECT * FROM {excess_table_name}"
