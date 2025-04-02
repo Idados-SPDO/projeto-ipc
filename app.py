@@ -151,7 +151,7 @@ def main():
         .groupby(["UF", "Data"])["Valor"].count().rename("Aceitável")
     df_suficiente = df_melted[(~df_melted["Exceção"]) & (df_melted["Valor"] > 100)]\
         .groupby(["UF", "Data"])["Valor"].count().rename("Suficiente")
-    df_excessao = df_melted[df_melted["Exceção"]].groupby(["UF", "Data"])["Valor"].count().rename("Excessão")
+    df_excessao = df_melted[df_melted["Exceção"]].groupby(["UF", "Data"])["Valor"].count().rename("Exceção")
     
     df_comparativo = pd.concat(
         [df_totais, df_super_critico, df_critico, df_aceitavel, df_suficiente, df_excessao], axis=1
@@ -163,7 +163,7 @@ def main():
     
     with tab1:
         st.write("### Status da quantidade de cotações (Jan/2025):")
-        st.dataframe(df_comparativo_recent[["UF", "Data", "Total", "SuperCrítico", "Crítico", "Aceitável", "Suficiente", "Excessão"]])
+        st.dataframe(df_comparativo_recent[["UF", "Data", "Total", "SuperCrítico", "Crítico", "Aceitável", "Suficiente", "Exceção"]])
         st.download_button(
             label="📥 Download do Visão Geral",
             data=to_excel(df_comparativo_recent, "Visão Geral"),
