@@ -162,7 +162,7 @@ def main():
     df_comparativo_recent = df_comparativo[df_comparativo["Data_dt"] == max_date]
     
     with tab1:
-        st.write("### Status da quantidade de cotações (Mês atual):")
+        st.write("### Status da quantidade de cotações (Jan/2025):")
         st.dataframe(df_comparativo_recent[["UF", "Data", "Total", "SuperCrítico", "Crítico", "Aceitável", "Suficiente", "Excessão"]])
         st.download_button(
             label="📥 Download do Visão Geral",
